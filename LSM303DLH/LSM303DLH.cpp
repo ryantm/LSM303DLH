@@ -2,6 +2,8 @@
 #include <Wire.h>
 #include <math.h>
 #include <vector.h>
+#include <Arduino.h> 
+
 
 // Defines ////////////////////////////////////////////////////////////////
 
@@ -69,18 +71,19 @@ void LSM303DLH::enable(void)
 {
 	//Enable Accelerometer
 	Wire.beginTransmission(ACC_ADDRESS);
-	Wire.send(CTRL_REG1_A);
+	Wire.write(CTRL_REG1_A);
 	//0x27 = 0b00100111
 	// Normal power mode, all axes enabled
-	Wire.send(0x27); 
+	Wire.write(0x27); 
 	Wire.endTransmission();
   
 	//Enable Magnetometer
 	Wire.beginTransmission(MAG_ADDRESS);
-	Wire.send(MR_REG_M);
+	Wire.write(MR_REG_M);
 	//0x00 = 0b00000000
-	// Continuous conversion mode
-	Wire.send(0x00);
+	// Continuous conversion mode:
+
+	Wire.write((byte)0x00);
 	Wire.endTransmission();
 }
 
@@ -91,18 +94,18 @@ void LSM303DLH::read()
 	Wire.beginTransmission(ACC_ADDRESS);
 	// assert the MSB of the address to get the accelerometer 
 	// to do slave-transmit subaddress updating.
-	Wire.send(OUT_X_L_A | (1 << 7)); 
+	Wire.write(OUT_X_L_A | (1 << 7)); 
 	Wire.endTransmission();
 	Wire.requestFrom(ACC_ADDRESS,6);
 
 	while (Wire.available() < 6);
 	
-	uint8_t xla = Wire.receive();
-	uint8_t xha = Wire.receive();
-	uint8_t yla = Wire.receive();
-	uint8_t yha = Wire.receive();
-	uint8_t zla = Wire.receive();
-	uint8_t zha = Wire.receive();
+	uint8_t xla = Wire.read();
+	uint8_t xha = Wire.read();
+	uint8_t yla = Wire.read();
+	uint8_t yha = Wire.read();
+	uint8_t zla = Wire.read();
+	uint8_t zha = Wire.read();
 
 	a.x = (xha << 8 | xla) >> 4;
 	a.y = (yha << 8 | yla) >> 4;
@@ -110,18 +113,18 @@ void LSM303DLH::read()
 	
 	//read magnetometer
 	Wire.beginTransmission(MAG_ADDRESS);
-	Wire.send(OUT_X_H_M);
+	Wire.write(OUT_X_H_M);
 	Wire.endTransmission();
 	Wire.requestFrom(MAG_ADDRESS,6);
 
 	while (Wire.available() < 6);
 
-	uint8_t xhm = Wire.receive();
-	uint8_t xlm = Wire.receive();
-	uint8_t yhm = Wire.receive();
-	uint8_t ylm = Wire.receive();
-	uint8_t zhm = Wire.receive();
-	uint8_t zlm = Wire.receive();
+	uint8_t xhm = Wire.read();
+	uint8_t xlm = Wire.read();
+	uint8_t yhm = Wire.read();
+	uint8_t ylm = Wire.read();
+	uint8_t zhm = Wire.read();
+	uint8_t zlm = Wire.read();
 
 	m.x = (xhm << 8 | xlm);
 	m.y = (yhm << 8 | ylm);
@@ -137,6 +140,7 @@ int LSM303DLH::heading()
 
 // Returns the number of degrees from the from vector that it
 // is pointing.
+
 int LSM303DLH::heading(vector from)
 {
 	// shift and scale
@@ -160,4 +164,44 @@ int LSM303DLH::heading(vector from)
     int heading = round(atan2(vector_dot(&E,&from), vector_dot(&N,&from)) * 180/M_PI);
     if(heading < 0) heading += 360;
 	return heading;
+}
+
+int LSM303DLH::pitch(void) 
+{
+	return a.x;
+}
+
+int LSM303DLH::roll(void) 
+{
+	return a.y;
+}
+
+int LSM303DLH::heave(void) 
+{
+	return a.z;
+}
+
+
+void LSM303DLH::calibrate(void)
+{
+	read();
+	// set magnetometer max and min:
+	if (m.x > m_max.x) m_max.x = m.x;
+	if (m.x < m_min.x) m_min.x = m.x;
+	
+	if (m.y > m_max.y) m_max.y = m.y;
+	if (m.y < m_min.y) m_min.y = m.y;
+	
+	if (m.z > m_max.z) m_max.z = m.z;
+	if (m.z < m_min.z) m_min.z = m.z;
+	
+	// set accelerometer max and min:
+	if (a.x > a_max.x) a_max.x = a.x;
+	if (a.x < a_min.x) a_min.x = a.x;
+	
+	if (a.y > a_max.y) a_max.y = a.y;
+	if (a.y < a_min.y) a_min.y = a.y;
+	
+	if (a.z > a_max.z) a_max.z = a.z;
+	if (a.z < a_min.z) a_min.z = a.z;
 }

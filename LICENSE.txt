@@ -3,6 +3,12 @@ Copyright (c) 2011 Pololu Corporation.  For more information, see
 http://www.pololu.com/
 http://forum.pololu.com/
 
+Modified 27 April 2011
+by Tom Igoe
+* Added roll(), pitch(), heave(), and calibrate() functions
+* modified Wire library calls to match Arduino 1.0 syntax for Wire library 
+(see https://github.com/arduino/Arduino/commit/9f412a2628296f917b9627e4cd02060f54cb2451)
+
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
 files (the "Software"), to deal in the Software without
