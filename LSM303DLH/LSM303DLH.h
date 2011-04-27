@@ -8,6 +8,8 @@ class LSM303DLH
 	public:
 		vector a; //accelerometer	
 		vector m; //magnetometer
+		vector a_max;
+		vector a_min;
 		vector m_max;
 		vector m_min;
 	
@@ -16,9 +18,10 @@ class LSM303DLH
 		void read(void);
 		int heading(void);
 		int heading(vector from);
+		int pitch(void);
+		int roll(void);
+		int heave(void);
+		void calibrate(void);
 };
 
 #endif
-
-
-
