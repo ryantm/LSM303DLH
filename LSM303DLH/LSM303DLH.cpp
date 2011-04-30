@@ -151,7 +151,7 @@ int LSM303DLH::heading(vector from)
 	vector temp_a = a;
     // normalize
     vector_normalize(&temp_a);
-    //vector_normalize(&m);
+     //vector_normalize(&m);
 
     // compute E and N
     vector E;
@@ -166,12 +166,34 @@ int LSM303DLH::heading(vector from)
 	return heading;
 }
 
-int LSM303DLH::pitch(void) 
+
+
+float LSM303DLH::pitch(void){
+	vector temp_a = a;
+	vector_normalize(&temp_a);
+	
+	double result = asin(temp_a.x) * 180/M_PI;
+	return (float)result;
+}
+
+
+float LSM303DLH::roll(void){
+	vector temp_a = a;
+	vector_normalize(&temp_a);
+	
+	double result = asin(temp_a.y) * 180/M_PI;
+	return (float)result;
+}
+
+
+
+int LSM303DLH::surge(void) 
 {
 	return a.x;
 }
 
-int LSM303DLH::roll(void) 
+
+int LSM303DLH::sway(void) 
 {
 	return a.y;
 }

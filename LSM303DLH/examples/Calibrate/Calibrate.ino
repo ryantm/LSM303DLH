@@ -20,12 +20,15 @@ void setup() {
 void loop() {
   // read the compass and print the results:
   compass.read();
-  Serial.print(compass.pitch());     // accelerometer X
-  Serial.print("\t"); 
-  Serial.print(compass.roll());      // accelerometer y
-  Serial.print("\t");
-  Serial.print(compass.heave());     // accelerometer z
-  Serial.print("\t"); 
+Serial.print("Pitch: ");           // X axis angle
+  Serial.print(compass.pitch());     // X axis angle
+  Serial.print("\tRoll: ");
+  Serial.print(compass.roll());      // Y axis angle
+  Serial.print("\tSurge: ");
+  Serial.print(compass.surge());     // X axis acceleration
+  Serial.print("\tSway: ");
+  Serial.print(compass.sway());    // Y axis acceleration
+  Serial.print("\tHeading: "); 
   Serial.println(compass.heading()); // compass heading
   delay(100); 
 }

@@ -18,9 +18,11 @@ class LSM303DLH
 		void read(void);
 		int heading(void);
 		int heading(vector from);
-		int pitch(void);
-		int roll(void);
+		int surge(void);
+		int sway(void);
 		int heave(void);
+		float pitch(void);
+		float roll(void);
 		void calibrate(void);
 };
 
