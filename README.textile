@@ -55,3 +55,8 @@ void enable(void) - Turns on the magnetometer and accelerometer
 void read(void) - Takes a reading and stores the values in the vectors a and m.
 int heading(void) - Returns the tilt-compensated degrees headed away from the -Y axis
 int heading(vector from) - Returns the tilt-compensated  degrees headed away from from
+int roll(void) - accelerometer X axis reading
+int pitch(void) - accelerometer Y axis reading
+int heave(void) - accelerometer Z axis reading
+void calibrate(void) - calibrates the compass and accelerometer
+
