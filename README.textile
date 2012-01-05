@@ -4,6 +4,10 @@ Version: 1.1.1
 Release Date: 2011-09-14
 "www.pololu.com":http://www.pololu.com/
 
+h2. Not recommended
+
+This library is no longer recommended. It has been superseded by the more general "LSM303 library":https://github.com/pololu/LSM303, that also supports Arduino 1.0.
+
 h2. Summary
 
 This is a library for the "Arduino":http://pololu.com/catalog/product/1616 that interfaces with the Pololu "LSM303DLH 3D compass and accelerometer carrier":http://www.pololu.com/catalog/product/1250. It makes it simple to read the raw accelerometer and magnetometer data, and it has a function for computing the tilt-compensated heading for those looking to use this sensor as a tilt-compensated compass.
