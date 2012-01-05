@@ -6,7 +6,7 @@ Release Date: 2011-09-14
 
 h2. Not recommended
 
-This library is no longer recommended. It has been superseded by the more general "LSM303 library":https://github.com/pololu/LSM303, that also supports Arduino 1.0.
+This library is no longer recommended. It has been superseded by the more general "LSM303 library":https://github.com/pololu/LSM303, which also supports Arduino 1.0.
 
 h2. Summary
 
