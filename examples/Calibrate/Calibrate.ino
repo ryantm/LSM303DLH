@@ -14,8 +14,7 @@ void setup() {
   while (millis() < 5000) {
     compass.calibrate(); 
   }
-
-}
+}  
 
 void loop() {
   // read the compass and print the results:
